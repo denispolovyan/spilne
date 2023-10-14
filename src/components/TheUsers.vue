@@ -39,8 +39,8 @@ function selectUser(user) {
 }
 
 const userClasses =
-  "tracking-wider py-2 px-4 bg-blue-600 rounded-md text-xl text-white font-semibold cursor-pointer hover:bg-yellow-500 duration-500";
-</script>
+  "tracking-wider py-3 px-4 bg-blue-600 rounded-md text-xl text-white font-semibold cursor-pointer hover:bg-yellow-500 duration-500";
+</script> 
 
 <template>
   <div
@@ -51,7 +51,7 @@ const userClasses =
   >
     <div class="spilne-container">
       <div class="flex gap-2 flex-wrap">
-        <div v-for="user in props.users" :key="user" class="">
+        <div v-for="user in props.users" :key="user">
           <div :class="userClasses" @click="selectUser(user)">
             <span>{{ user }}</span>
           </div>
