@@ -46,23 +46,25 @@ function addUser() {
 }
 
 const buttonClasses =
-  "bg-green-500 h-14 w-14 rounded-md flex items-center justify-center hover:bg-green-700 duration-1000 cursor-pointer";
+  "bg-green-500 h-14 w-14 rounded-md flex items-center justify-center hover:bg-green-700 duration-1000 cursor-pointer basis-14";
 </script>
 
 <template>
   <div class="py-4 border-b">
     <div class="spilne-container">
-      <div class="flex items-center gap-2">
-        <v-text-field
-          :class="{
-            'text-red-600': inputError,
-          }"
-          @click="inputError = false"
-          v-model="username"
-          label="Name"
-			 maxlength="12"
-          hide-details="auto"
-        />
+      <div class="flex items-center justify-between">
+        <div class="flex basis-5/6">
+          <v-text-field
+            :class="{
+              'text-red-600': inputError,
+            }"
+            @click="inputError = false"
+            v-model="username"
+            label="Name"
+            maxlength="12"
+            hide-details="auto"
+          />
+        </div>
         <div :class="buttonClasses" @click="addUser()">
           <plus-icon class="h-12 text-white p-1" />
         </div>

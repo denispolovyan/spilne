@@ -17,6 +17,10 @@ const emits = defineEmits({
     type: String,
     reuired: false,
   },
+  deleteUser: {
+    type: String,
+    required: false,
+  },
 });
 
 function selectUser(user) {
@@ -25,6 +29,7 @@ function selectUser(user) {
   props.selectedUsers.forEach((el) => {
     if (el == user) {
       coincidence = true;
+		emits("deleteUser", user)
     }
   });
 
