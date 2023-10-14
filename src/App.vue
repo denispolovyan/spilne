@@ -1,17 +1,30 @@
 <script setup>
 import TheHeader from "./components/TheHeader.vue";
+import TheUsers from "./components/TheUsers.vue";
 
 import { ref } from "vue";
 
-let users = ref([]);
+let users = ref(["Denys", "Nika", "julia"]);
+
+let selectedUsers = ref([]);
 
 function createUser(user) {
   users.value.push(user);
 }
+function setSelectedUsers(user) {
+  selectedUsers.value.push(user);
+}
 </script>
 
 <template>
-  <the-header :users="users" @createUser="createUser($event)" />
+  <div>
+    <the-header :users="users" @createUser="createUser($event)" />
+    <the-users
+      :users="users"
+      :selectedUsers="selectedUsers"
+      @selectUser="setSelectedUsers($event)"
+    />
+  </div>
 </template>
 
 <style>

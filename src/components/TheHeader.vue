@@ -60,6 +60,7 @@ const buttonClasses =
           @click="inputError = false"
           v-model="username"
           label="Name"
+			 maxlength="12"
           hide-details="auto"
         />
         <div :class="buttonClasses" @click="addUser()">
