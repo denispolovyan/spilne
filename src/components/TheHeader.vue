@@ -1,7 +1,7 @@
 <script setup>
 import { PlusIcon } from "@heroicons/vue/24/solid";
 
-import { ref } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 
 const emits = defineEmits({
   createUser: {
@@ -44,6 +44,21 @@ function addUser() {
     inputError.value = true;
   }
 }
+
+function handleKeydown(e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    addUser();
+  }
+}
+
+onMounted(() => {
+  document.addEventListener("keydown", handleKeydown);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("keydown", handleKeydown);
+});
 
 const buttonClasses =
   "bg-green-500 h-14 w-14 rounded-md flex items-center justify-center hover:bg-green-700 duration-1000 cursor-pointer basis-14";

@@ -3,10 +3,13 @@ import TheHeader from "./components/TheHeader.vue";
 import TheUsers from "./components/TheUsers.vue";
 import TheSelectedUsers from "./components/TheSelectedUsers.vue";
 import BaseInput from "./components/BaseInput.vue";
+import BaseTable from "./components/BaseTable.vue";
 
-import { ref } from "vue";
+import { ref, watch, onMounted } from "vue";
 
 let users = ref(["Denys", "Nika", "Yuliya"]);
+
+let usersAndSum = ref([]);
 
 let selectedUsers = ref([]);
 
@@ -106,8 +109,77 @@ function setSelectedUsers(user) {
 function changeSum(data) {
   const id = data[0];
 
-  inputs.value.find((t) => (t.id = id)).sum = data[1];
+  inputs.value.find((t) => (t.id == id)).sum = data[1];
+
+  calculateUsersSum();
 }
+
+function calculateUsersSum() {
+  usersAndSum.value.forEach((user) => { // Yuliya
+    let sum = 0;
+
+    inputs.value.forEach((input) => { // Yulia Denys Nika || Yulia
+      // 1 match
+      if (input.users.includes(user.name)) { // 1 match
+        sum = Math.round(sum + input.sum / input.users.length);
+		  //collect all sums
+      }
+    });
+
+    user.sum = sum;
+  });
+}
+
+function createUsersSum() {
+  let coincidence = false;
+  users.value.forEach((user1) => {
+    usersAndSum.value.forEach((user2) => {
+      if (user2.name == user1) {
+        coincidence = true;
+      }
+    });
+
+    if (!coincidence) {
+      usersAndSum.value.push({ name: user1, sum: 0 });
+    }
+    coincidence = false;
+  });
+
+  deleteUserSum();
+}
+
+function deleteUserSum() {
+  let coincidence = false;
+
+  usersAndSum.value.forEach((user1) => {
+    users.value.forEach((user2) => {
+      if (user2 == user1.name) {
+        coincidence = true;
+      }
+    });
+
+    if (!coincidence) {
+      usersAndSum.value = usersAndSum.value.filter((t) => t.name != user1.name);
+    }
+    coincidence = false;
+  });
+}
+
+// watch ====>
+
+watch(
+  () => users,
+  () => {
+    createUsersSum();
+  },
+  { deep: true }
+);
+
+// onMounted ====>
+
+onMounted(() => {
+  createUsersSum();
+});
 </script>
 
 <template>
@@ -133,6 +205,7 @@ function changeSum(data) {
         @deleteInput="deleteInput($event)"
       />
     </div>
+    <base-table v-if="inputs.length" :usersAndSum="usersAndSum" />
   </div>
 </template>
 
