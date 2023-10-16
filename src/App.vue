@@ -7,7 +7,6 @@ import BaseTable from "./components/BaseTable.vue";
 import NoInputs from "./components/NoInputs.vue";
 import NoDebts from "./components/NoDebts.vue";
 
-
 import { ref, watch, onMounted } from "vue";
 
 let users = ref(["Denys", "Nika", "Yuliya", "Mykyta"]);
@@ -16,25 +15,22 @@ let usersAndSum = ref([]);
 
 let selectedUsers = ref([]);
 
-let inputs = ref([{ users: users.value, id: 1, sum: 0 }]);
+let inputs = ref([]);
 
 let isDebts = ref(false);
 
-watch(
-  () => usersAndSum.value,
-  () => {
-	isDebts.value = false;
-    usersAndSum.value.forEach((el) => {
-      if (el.sum != 0) {
-			isDebts.value = true;
-      }
-    });
-  },
-  { deep: true }
-);
-
 function createUser(user) {
   users.value.push(user);
+  localStorage.setItem("users", JSON.stringify(users.value));
+}
+
+function deleteUsers() {
+  selectedUsers.value.forEach((user) => {
+    users.value = users.value.filter((t) => t != user);
+  });
+  selectedUsers.value = [];
+
+  localStorage.setItem("users", JSON.stringify(users.value));
 }
 
 function createInput(users) {
@@ -101,30 +97,13 @@ function createInput(users) {
   }
 
   deleteSelectedUsers();
-}
-
-function deleteSelectedUsers() {
-  selectedUsers.value = [];
-}
-
-function deleteSelectedUser(user) {
-  selectedUsers.value = selectedUsers.value.filter((t) => t != user);
-}
-
-function deleteUsers() {
-  selectedUsers.value.forEach((user) => {
-    users.value = users.value.filter((t) => t != user);
-  });
-  selectedUsers.value = [];
+  localStorage.setItem("inputs", JSON.stringify(inputs.value));
 }
 
 function deleteInput(id) {
   inputs.value = inputs.value.filter((el) => el.id != id);
   calculateUsersSum();
-}
-
-function setSelectedUsers(user) {
-  selectedUsers.value.push(user);
+  localStorage.setItem("inputs", JSON.stringify(inputs.value));
 }
 
 function changeSum(data) {
@@ -133,25 +112,19 @@ function changeSum(data) {
   inputs.value.find((t) => t.id == id).sum = data[1];
 
   calculateUsersSum();
+  localStorage.setItem("inputs", JSON.stringify(inputs.value));
 }
 
-function calculateUsersSum() {
-  usersAndSum.value.forEach((user) => {
-    // Yuliya
-    let sum = 0;
+function setSelectedUsers(user) {
+  selectedUsers.value.push(user);
+}
 
-    inputs.value.forEach((input) => {
-      // Yulia Denys Nika || Yulia
-      // 1 match
-      if (input.users.includes(user.name)) {
-        // 1 match
-        sum = Math.round(sum + input.sum / input.users.length);
-        //collect all sums
-      }
-    });
+function deleteSelectedUsers() {
+  selectedUsers.value = [];
+}
 
-    user.sum = sum;
-  });
+function deleteSelectedUser(user) {
+  selectedUsers.value = selectedUsers.value.filter((t) => t != user);
 }
 
 function createUsersSum() {
@@ -170,6 +143,22 @@ function createUsersSum() {
   });
 
   deleteUserSum();
+  localStorage.setItem("users-sums", JSON.stringify(usersAndSum.value));
+}
+
+function calculateUsersSum() {
+  usersAndSum.value.forEach((user) => {
+    let sum = 0;
+
+    inputs.value.forEach((input) => {
+      if (input.users.includes(user.name)) {
+        sum = Math.round(sum + input.sum / input.users.length);
+      }
+    });
+
+    user.sum = sum;
+  });
+  localStorage.setItem("users-sums", JSON.stringify(usersAndSum.value));
 }
 
 function deleteUserSum() {
@@ -187,9 +176,27 @@ function deleteUserSum() {
     }
     coincidence = false;
   });
+  localStorage.setItem("users-sums", JSON.stringify(usersAndSum.value));
+}
+
+function watchDebtState() {
+  isDebts.value = false;
+  usersAndSum.value.forEach((el) => {
+    if (el.sum != 0) {
+      isDebts.value = true;
+    }
+  });
 }
 
 // watch ====>
+
+watch(
+  () => usersAndSum.value,
+  () => {
+    watchDebtState();
+  },
+  { deep: true }
+);
 
 watch(
   () => users,
@@ -203,11 +210,34 @@ watch(
 
 onMounted(() => {
   createUsersSum();
+
+  let getUsers = localStorage.getItem("users");
+  if (JSON.parse(getUsers)) {
+    users.value = JSON.parse(getUsers);
+  }
+
+  let getInputs = localStorage.getItem("inputs");
+  if (JSON.parse(getInputs)) {
+    inputs.value = JSON.parse(getInputs);
+  }
+
+  let getUsersAndSums = localStorage.getItem("users-sums");
+  if (JSON.parse(getUsersAndSums)) {
+    JSON.parse(getUsersAndSums).forEach((newUser) => {
+      usersAndSum.value.forEach((user) => {
+        if (user.name == newUser.name) {
+			user.sum = newUser.sum
+        }
+      });
+    });
+  }
+
+  watchDebtState();
 });
 </script>
 
 <template>
-  <div>
+  <div class="pb-8">
     <the-header :users="users" @createUser="createUser($event)" />
     <the-users
       :users="users"
@@ -223,6 +253,7 @@ onMounted(() => {
     <div v-if="inputs.length">
       <div v-for="input in inputs" :key="input.id">
         <base-input
+          :sum="input.sum"
           :users="input.users"
           :id="input.id"
           @changeSum="changeSum($event)"
@@ -233,7 +264,7 @@ onMounted(() => {
     <no-inputs v-else />
 
     <base-table v-if="inputs.length" :usersAndSum="usersAndSum" />
-	 <no-debts v-if="!isDebts && inputs.length"/>
+    <no-debts v-if="!isDebts && inputs.length" />
   </div>
 </template>
 

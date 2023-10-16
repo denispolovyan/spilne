@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 import { TrashIcon } from "@heroicons/vue/24/solid";
 
@@ -9,6 +9,10 @@ const props = defineProps({
     required: true,
   },
   id: {
+    type: Number,
+    required: true,
+  },
+  sum: {
     type: Number,
     required: true,
   },
@@ -33,12 +37,19 @@ const sum = ref();
 const calculatedSum = ref(0);
 
 function calculateSum() {
-  let sumArray = sum.value.split(" ");
+  let sumArray = [];
   let rawSum = 0;
+  if (typeof sum.value == "string") {
+    sumArray = sum.value.split(" ");
+  }
 
-  sumArray.forEach((el) => {
-    rawSum = rawSum + +el;
-  });
+  if (sumArray.length) {
+    sumArray.forEach((el) => {
+      rawSum = rawSum + +el;
+    });
+  } else {
+    rawSum = sum.value;
+  }
 
   calculatedSum.value = rawSum;
   emits("changeSum", [props.id, calculatedSum.value]);
@@ -46,6 +57,11 @@ function calculateSum() {
 
 const buttonClasses =
   "bg-red-500 h-14 w-14 rounded-md flex items-center justify-center hover:bg-red-700 duration-1000 cursor-pointer basis-14";
+
+onMounted(() => {
+  sum.value = props.sum;
+  calculateSum();
+});
 </script>
 
 <template>

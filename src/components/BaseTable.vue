@@ -1,5 +1,5 @@
 <script setup>
-import { watch, ref } from "vue";
+import { watch, ref, onMounted } from "vue";
 
 const props = defineProps({
   usersAndSum: {
@@ -10,18 +10,26 @@ const props = defineProps({
 
 const isNotNull = ref(false);
 
+function watchDebtState() {
+  isNotNull.value = false;
+  props.usersAndSum.forEach((el) => {
+    if (el.sum != 0) {
+      isNotNull.value = true;
+    }
+  });
+}
+
 watch(
   () => props.usersAndSum,
   () => {
-    isNotNull.value = false;
-    props.usersAndSum.forEach((el) => {
-      if (el.sum != 0) {
-        isNotNull.value = true;
-      }
-    });
+    watchDebtState();
   },
   { deep: true }
 );
+
+onMounted(() => {
+  watchDebtState();
+});
 </script>
 
 <template>
