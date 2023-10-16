@@ -39,7 +39,7 @@ const calculatedSum = ref(0);
 function calculateSum() {
   let lastEl = sum.value.toString().slice(-1);
 
-  if ( isNaN(lastEl) == true && lastEl != " ") {
+  if (isNaN(lastEl) == true && lastEl != " ") {
     sum.value = sum.value.toString().slice(0, -1);
   }
 
@@ -57,7 +57,12 @@ function calculateSum() {
     rawSum = sum.value;
   }
 
-  calculatedSum.value = rawSum;
+  if (rawSum > 99999) {
+    calculatedSum.value = 99999;
+  } else {
+    calculatedSum.value = rawSum;
+  }
+
   emits("changeSum", [props.id, calculatedSum.value]);
 }
 
@@ -89,7 +94,7 @@ onMounted(() => {
               class=""
               v-model="sum"
               label="Sum"
-              maxlength="60"
+              maxlength="200"
               hide-details="auto"
               @input="calculateSum()"
             />
