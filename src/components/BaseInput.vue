@@ -33,7 +33,7 @@ const emits = defineEmits({
   },
 });
 
-const sum = ref();
+const sum = ref('');
 const calculatedSum = ref(0);
 
 function calculateSum() {
@@ -59,7 +59,7 @@ const buttonClasses =
   "bg-red-500 h-14 w-14 rounded-md flex items-center justify-center hover:bg-red-700 duration-1000 cursor-pointer basis-14";
 
 onMounted(() => {
-  sum.value = props.sum;
+  sum.value = props.sum || '';
   calculateSum();
 });
 </script>

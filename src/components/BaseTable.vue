@@ -9,6 +9,7 @@ const props = defineProps({
 });
 
 const isNotNull = ref(false);
+const totalSum = ref(0);
 
 function watchDebtState() {
   isNotNull.value = false;
@@ -19,15 +20,26 @@ function watchDebtState() {
   });
 }
 
+function calculateTotalSum() {
+  let newTotalSum = 0;
+  props.usersAndSum.forEach((el) => {
+    newTotalSum += el.sum;
+  });
+
+  totalSum.value = newTotalSum;
+}
+
 watch(
   () => props.usersAndSum,
   () => {
     watchDebtState();
+    calculateTotalSum();
   },
   { deep: true }
 );
 
 onMounted(() => {
+	calculateTotalSum();
   watchDebtState();
 });
 </script>
@@ -37,8 +49,8 @@ onMounted(() => {
     <div class="spilne-container py-4">
       <div>
         <v-table>
-          <thead>
-            <tr v-if="isNotNull">
+          <thead v-if="isNotNull">
+            <tr>
               <th class="text-left">Name</th>
               <th class="text-left">Sum</th>
             </tr>
@@ -47,6 +59,12 @@ onMounted(() => {
             <tr v-for="item in props.usersAndSum" :key="item.name">
               <td v-if="item.sum">{{ item.name }}</td>
               <td v-if="item.sum">{{ item.sum }}</td>
+            </tr>
+          </tbody>
+          <tbody v-if="isNotNull">
+            <tr>
+              <td class="font-semibold">Total</td>
+              <td>{{ totalSum }}</td>
             </tr>
           </tbody>
         </v-table>
