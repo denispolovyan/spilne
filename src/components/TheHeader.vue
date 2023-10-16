@@ -67,7 +67,7 @@ const buttonClasses =
 <template>
   <div class="py-4 border-b">
     <div class="spilne-container">
-      <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between gap-2">
         <div class="flex basis-5/6">
           <v-text-field
             :class="{

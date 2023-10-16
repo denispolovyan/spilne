@@ -4,16 +4,34 @@ import TheUsers from "./components/TheUsers.vue";
 import TheSelectedUsers from "./components/TheSelectedUsers.vue";
 import BaseInput from "./components/BaseInput.vue";
 import BaseTable from "./components/BaseTable.vue";
+import NoInputs from "./components/NoInputs.vue";
+import NoDebts from "./components/NoDebts.vue";
+
 
 import { ref, watch, onMounted } from "vue";
 
-let users = ref(["Denys", "Nika", "Yuliya"]);
+let users = ref(["Denys", "Nika", "Yuliya", "Mykyta"]);
 
 let usersAndSum = ref([]);
 
 let selectedUsers = ref([]);
 
 let inputs = ref([{ users: users.value, id: 1, sum: 0 }]);
+
+let isDebts = ref(false);
+
+watch(
+  () => usersAndSum.value,
+  () => {
+	isDebts.value = false;
+    usersAndSum.value.forEach((el) => {
+      if (el.sum != 0) {
+			isDebts.value = true;
+      }
+    });
+  },
+  { deep: true }
+);
 
 function createUser(user) {
   users.value.push(user);
@@ -81,6 +99,8 @@ function createInput(users) {
 
     inputs.value.push(input);
   }
+
+  deleteSelectedUsers();
 }
 
 function deleteSelectedUsers() {
@@ -100,6 +120,7 @@ function deleteUsers() {
 
 function deleteInput(id) {
   inputs.value = inputs.value.filter((el) => el.id != id);
+  calculateUsersSum();
 }
 
 function setSelectedUsers(user) {
@@ -109,20 +130,23 @@ function setSelectedUsers(user) {
 function changeSum(data) {
   const id = data[0];
 
-  inputs.value.find((t) => (t.id == id)).sum = data[1];
+  inputs.value.find((t) => t.id == id).sum = data[1];
 
   calculateUsersSum();
 }
 
 function calculateUsersSum() {
-  usersAndSum.value.forEach((user) => { // Yuliya
+  usersAndSum.value.forEach((user) => {
+    // Yuliya
     let sum = 0;
 
-    inputs.value.forEach((input) => { // Yulia Denys Nika || Yulia
+    inputs.value.forEach((input) => {
+      // Yulia Denys Nika || Yulia
       // 1 match
-      if (input.users.includes(user.name)) { // 1 match
+      if (input.users.includes(user.name)) {
+        // 1 match
         sum = Math.round(sum + input.sum / input.users.length);
-		  //collect all sums
+        //collect all sums
       }
     });
 
@@ -195,17 +219,21 @@ onMounted(() => {
       :selectedUsers="selectedUsers"
       @deleteUsers="deleteUsers()"
       @createInput="createInput($event)"
-      @deleteSelectedUsers="deleteSelectedUsers()"
     />
-    <div v-for="input in inputs" :key="input.id">
-      <base-input
-        :users="input.users"
-        :id="input.id"
-        @changeSum="changeSum($event)"
-        @deleteInput="deleteInput($event)"
-      />
+    <div v-if="inputs.length">
+      <div v-for="input in inputs" :key="input.id">
+        <base-input
+          :users="input.users"
+          :id="input.id"
+          @changeSum="changeSum($event)"
+          @deleteInput="deleteInput($event)"
+        />
+      </div>
     </div>
+    <no-inputs v-else />
+
     <base-table v-if="inputs.length" :usersAndSum="usersAndSum" />
+	 <no-debts v-if="!isDebts && inputs.length"/>
   </div>
 </template>
 

@@ -8,17 +8,13 @@ const props = defineProps({
   },
 });
 
-const emits = defineEmits([
-  "deleteUsers",
-  "createInput",
-  "deleteSelectedUsers",
-]);
+const emits = defineEmits(["deleteUsers", "createInput"]);
 
 const userClasses =
-  "tracking-wider py-3 px-4 bg-blue-800 rounded-md text-xl text-white font-semibold cursor-pointer hover:bg-yellow-600 duration-500";
+  "tracking-wider py-3 px-2 bg-blue-800 rounded-md text-md text-white font-semibold cursor-pointer hover:bg-yellow-600 duration-500";
 
 const buttonClasses =
-  " h-14 w-14 rounded-md flex items-center justify-center  duration-1000 cursor-pointer basis-14";
+  " h-12 w-12 rounded-md flex items-center justify-center  duration-1000 cursor-pointer basis-14";
 </script>
 
 <template>
@@ -42,10 +38,7 @@ const buttonClasses =
           </div>
           <div
             :class="buttonClasses"
-            @click="
-              emits('createInput', props.selectedUsers),
-                emits('deleteSelectedUsers')
-            "
+            @click="emits('createInput', props.selectedUsers)"
             class="bg-yellow-500 hover:bg-yellow-700"
           >
             <PlusIcon class="h-12 text-white p-1" />
