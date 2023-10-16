@@ -6,6 +6,7 @@ import BaseInput from "./components/BaseInput.vue";
 import BaseTable from "./components/BaseTable.vue";
 import NoInputs from "./components/NoInputs.vue";
 import NoDebts from "./components/NoDebts.vue";
+import TheFooter from "./components/TheFooter.vue";
 
 import { ref, watch, onMounted } from "vue";
 
@@ -226,7 +227,7 @@ onMounted(() => {
     JSON.parse(getUsersAndSums).forEach((newUser) => {
       usersAndSum.value.forEach((user) => {
         if (user.name == newUser.name) {
-			user.sum = newUser.sum
+          user.sum = newUser.sum;
         }
       });
     });
@@ -237,41 +238,66 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="pb-8">
+  <div class="flex flex-col h-screen">
     <the-header :users="users" @createUser="createUser($event)" />
-    <the-users
-      :users="users"
-      :selectedUsers="selectedUsers"
-      @selectUser="setSelectedUsers($event)"
-      @deleteUser="deleteSelectedUser($event)"
-    />
-    <the-selected-users
-      :selectedUsers="selectedUsers"
-      @deleteUsers="deleteUsers()"
-      @createInput="createInput($event)"
-    />
-    <div v-if="inputs.length">
-      <div v-for="input in inputs" :key="input.id">
-        <base-input
-          :sum="input.sum"
-          :users="input.users"
-          :id="input.id"
-          @changeSum="changeSum($event)"
-          @deleteInput="deleteInput($event)"
-        />
+    <div class="grow">
+      <the-users
+        :users="users"
+        :selectedUsers="selectedUsers"
+        @selectUser="setSelectedUsers($event)"
+        @deleteUser="deleteSelectedUser($event)"
+      />
+      <the-selected-users
+        :selectedUsers="selectedUsers"
+        @deleteUsers="deleteUsers()"
+        @createInput="createInput($event)"
+      />
+      <div v-if="inputs.length">
+        <div v-for="input in inputs" :key="input.id">
+          <base-input
+            :sum="input.sum"
+            :users="input.users"
+            :id="input.id"
+            @changeSum="changeSum($event)"
+            @deleteInput="deleteInput($event)"
+          />
+        </div>
       </div>
-    </div>
-    <no-inputs v-else />
+      <no-inputs class="pb-8" v-else />
 
-    <base-table v-if="inputs.length" :usersAndSum="usersAndSum" />
-    <no-debts v-if="!isDebts && inputs.length" />
+      <base-table
+        class="pb-8"
+        v-if="inputs.length"
+        :usersAndSum="usersAndSum"
+      />
+      <no-debts class="pb-8" v-if="!isDebts && inputs.length" />
+    </div>
+
+    <the-footer clas="w-screen" />
   </div>
 </template>
 
 <style>
+html {
+  height: 100vh;
+  margin-bottom: 20px;
+}
+body {
+  height: 100vh;
+}
+#app {
+  height: 100vh;
+}
 .spilne-container {
-  max-width: 530px;
+  width: 530px;
   padding: 0px 15px;
   margin: 0px auto;
+}
+@media (max-width: 560px) {
+  .spilne-container {
+    width: 100%;
+    padding: 0px 15px;
+    margin: 0px auto;
+  }
 }
 </style>

@@ -2,6 +2,7 @@ import './style.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
+import VueScrollTo from 'vue-scrollto'
 
 // Vuetify
 import 'vuetify/styles'
@@ -14,5 +15,13 @@ const vuetify = createVuetify({
   directives,
 })
 
-createApp(App).use(vuetify).mount('#app')
+const app = createApp(App);
+app.directive("scroll-to", VueScrollTo);
+app.use(vuetify)
+app.mount("#app");
 
+
+// const app = createApp(App);
+// app.use(store);
+// app.directive("scroll-to", VueScrollTo);
+// app.mount("#app");

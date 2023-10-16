@@ -46,7 +46,7 @@ onMounted(() => {
 
 <template>
   <div>
-    <div class="spilne-container py-4">
+    <div class="spilne-container py-4 border-b-2 border-slate-300">
       <div>
         <v-table>
           <thead v-if="isNotNull">

@@ -18,8 +18,8 @@ const buttonClasses =
 </script>
 
 <template>
-  <div v-if="props.selectedUsers.length" class="py-4 border-b">
-    <div class="spilne-container">
+  <div v-if="props.selectedUsers.length" class="pt-4">
+    <div class="spilne-container border-b-2 border-slate-300 pb-4">
       <div class="flex justify-between">
         <div class="flex gap-2 flex-wrap basis-3/4">
           <div v-for="user in props.selectedUsers" :key="user" class="">

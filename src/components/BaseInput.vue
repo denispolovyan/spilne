@@ -33,7 +33,7 @@ const emits = defineEmits({
   },
 });
 
-const sum = ref('');
+const sum = ref("");
 const calculatedSum = ref(0);
 
 function calculateSum() {
@@ -59,47 +59,45 @@ const buttonClasses =
   "bg-red-500 h-14 w-14 rounded-md flex items-center justify-center hover:bg-red-700 duration-1000 cursor-pointer basis-14";
 
 onMounted(() => {
-  sum.value = props.sum || '';
+  sum.value = props.sum || "";
   calculateSum();
 });
 </script>
 
 <template>
-  <div class="py-4" v-if="users.length">
-    <div class="spilne-container">
-      <div>
-        <div>
-          <div class="flex flex-col gap-3">
-            <div class="flex gap-4 flex-wrap gap-x-2 gap-y-1">
-              <div v-for="user in props.users" :key="user">
-                <div
-                  class="tracking-wider font-semibold bg-cyan-700 p-1 text-white rounded-md"
-                >
-                  <p>{{ user }}</p>
-                </div>
+  <div class="pt-4" v-if="users.length">
+    <div class="spilne-container pb-2">
+      <div class="border-b-2 pb-4 border-slate-200">
+        <div class="flex flex-col gap-3">
+          <div class="flex gap-4 flex-wrap gap-x-2 gap-y-1">
+            <div v-for="user in props.users" :key="user">
+              <div
+                class="tracking-wider font-semibold bg-cyan-700 p-1 text-white rounded-md"
+              >
+                <p>{{ user }}</p>
               </div>
             </div>
-            <div class="flex gap-4">
-              <v-text-field
-                class=""
-                v-model="sum"
-                label="Sum"
-                maxlength="60"
-                hide-details="auto"
-                @input="calculateSum()"
-              />
-              <div class="flex gap-2">
-                <div
-                  class="w-14 bg-amber-500 duration-1000 cursor-pointer hover:bg-amber-700 text-white rounded-md flex items-center justify-center tracking-wider font-semibold"
-                >
-                  {{ calculatedSum }}
-                </div>
-                <div
-                  :class="buttonClasses"
-                  @click="emits('deleteInput', props.id)"
-                >
-                  <TrashIcon class="h-12 text-white p-1" />
-                </div>
+          </div>
+          <div class="flex gap-4">
+            <v-text-field
+              class=""
+              v-model="sum"
+              label="Sum"
+              maxlength="60"
+              hide-details="auto"
+              @input="calculateSum()"
+            />
+            <div class="flex gap-2">
+              <div
+                class="w-14 bg-amber-500 duration-1000 cursor-pointer hover:bg-amber-700 text-white rounded-md flex items-center justify-center tracking-wider font-semibold"
+              >
+                {{ calculatedSum }}
+              </div>
+              <div
+                :class="buttonClasses"
+                @click="emits('deleteInput', props.id)"
+              >
+                <TrashIcon class="h-12 text-white p-1" />
               </div>
             </div>
           </div>

@@ -65,7 +65,7 @@ const buttonClasses =
 </script>
 
 <template>
-  <div class="py-4 border-b">
+  <div class="pt-4" id="header">
     <div class="spilne-container">
       <div class="flex items-center justify-between gap-2">
         <div class="flex basis-5/6">
