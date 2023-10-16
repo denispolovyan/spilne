@@ -46,10 +46,10 @@ onMounted(() => {
 
 <template>
   <div>
-    <div class="spilne-container py-4 border-b-2 border-slate-300">
+    <div class="spilne-container py-4 border-b-2 border-slate-300" v-if="isNotNull">
       <div>
         <v-table>
-          <thead v-if="isNotNull">
+          <thead>
             <tr>
               <th class="text-left">Name</th>
               <th class="text-left">Sum</th>
@@ -61,7 +61,7 @@ onMounted(() => {
               <td v-if="item.sum">{{ item.sum }}</td>
             </tr>
           </tbody>
-          <tbody v-if="isNotNull">
+          <tbody>
             <tr>
               <td class="font-semibold">Total</td>
               <td>{{ totalSum }}</td>

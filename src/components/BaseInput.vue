@@ -37,6 +37,12 @@ const sum = ref("");
 const calculatedSum = ref(0);
 
 function calculateSum() {
+  let lastEl = sum.value.toString().slice(-1);
+
+  if ( isNaN(lastEl) == true && lastEl != " ") {
+    sum.value = sum.value.toString().slice(0, -1);
+  }
+
   let sumArray = [];
   let rawSum = 0;
   if (typeof sum.value == "string") {
