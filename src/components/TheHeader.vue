@@ -1,7 +1,7 @@
 <script setup>
 const MAX_LENGTH = 12;
 
-import { PlusIcon, InformationCircleIcon } from "@heroicons/vue/24/outline";
+import { UserPlusIcon, InformationCircleIcon } from "@heroicons/vue/24/outline";
 
 import { ref, onMounted, onBeforeUnmount } from "vue";
 
@@ -88,14 +88,14 @@ const buttonClasses =
           />
         </div>
         <div class="flex gap-2">
-          <PlusIcon
+          <UserPlusIcon
             :class="buttonClasses"
-            class="h-12 text-slate-200 p-1 bg-teal-600 hover:bg-teal-700"
+            class="h-12 text-slate-200 p-1 bg-pink-500 hover:bg-pink-800"
             @click="addUser()"
           />
           <InformationCircleIcon
             :class="buttonClasses"
-            class="h-12 text-slate-200 p-1 bg-fuchsia-700 hover:bg-fuchsia-800"
+            class="h-12 text-slate-200 p-1 bg-purple-600 hover:bg-purple-800"
           />
         </div>
       </div>

@@ -51,19 +51,19 @@ onMounted(() => {
         <v-table theme="dark">
           <thead>
             <tr>
-              <th class="text-left pl-10" >Name</th>
+              <th class="text-left pl-12" >Name</th>
               <th class="text-center">Sum</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="item in props.usersAndSum" :key="item.name">
-              <td v-if="item.sum" class="pl-10">{{ item.name }}</td>
+              <td v-if="item.sum" class="pl-12">{{ item.name }}</td>
               <td v-if="item.sum" class="text-center">{{ item.sum }}</td>
             </tr>
           </tbody>
           <tbody class="border-t">
             <tr>
-              <td class="font-semibold pl-10">Total</td>
+              <td class="font-semibold pl-12">Total</td>
               <td class="text-center">{{ totalSum }}</td>
             </tr>
           </tbody>

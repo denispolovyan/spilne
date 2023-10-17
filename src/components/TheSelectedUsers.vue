@@ -11,7 +11,7 @@ const props = defineProps({
 const emits = defineEmits(["deleteUsers", "createInput"]);
 
 const userClasses =
-  "tracking-wider py-3 px-2 bg-cyan-800 rounded-md text-md text-slate-200 font-semibold cursor-pointer hover:bg-cyan-600 duration-500";
+  "tracking-wider py-4 px-3 bg-violet-800 rounded-md text-md text-slate-200 font-semibold cursor-pointer hover:bg-violet-600 duration-500";
 
 const buttonClasses =
   " h-12 w-12 rounded-md flex items-center justify-center  duration-1000 cursor-pointer basis-14";
@@ -31,7 +31,7 @@ const buttonClasses =
         <div class="flex gap-2">
           <div
             :class="buttonClasses"
-            class="bg-red-600 hover:bg-red-700 w-14"
+            class="bg-red-600 hover:bg-red-700 w-14 h-14"
             @click="emits('deleteUsers')"
           >
             <UserMinusIcon class="h-12 text-slate-200 p-1" />
@@ -39,7 +39,7 @@ const buttonClasses =
           <div
             :class="buttonClasses"
             @click="emits('createInput', props.selectedUsers)"
-            class="bg-yellow-600 hover:bg-yellow-700 w-14"
+            class="bg-lime-600 hover:bg-lime-700 w-14 h-14"
           >
             <PlusIcon class="h-12 text-white p-1 text-slate-200" />
           </div>

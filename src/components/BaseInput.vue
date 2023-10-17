@@ -94,7 +94,7 @@ onMounted(() => {
           <div class="flex gap-4 flex-wrap gap-x-2 gap-y-1">
             <div v-for="user in props.users" :key="user">
               <div
-                class="tracking-wider font-semibold bg-cyan-800 p-1 rounded-md text-slate-200"
+                class="tracking-wider font-semibold bg-violet-800 p-1 rounded-md text-slate-200"
               >
                 <p>{{ user }}</p>
               </div>
@@ -111,7 +111,7 @@ onMounted(() => {
             />
             <div class="flex gap-2">
               <div
-                class="w-14 bg-amber-600 duration-1000 cursor-pointer hover:bg-amber-700 text-slate-200 rounded-md flex items-center justify-center tracking-wider font-semibold"
+                class="w-14 bg-amber-500 duration-1000 cursor-pointer hover:bg-amber-700 text-slate-100 hover:text-slate-300 rounded-md flex items-center justify-center tracking-wider font-semibold"
               >
                 {{ calculatedSum }}
               </div>

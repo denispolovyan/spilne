@@ -39,7 +39,7 @@ function selectUser(user) {
 }
 
 const userClasses =
-  "tracking-wider py-3 px-2 bg-cyan-800 rounded-md text-md text-slate-200 font-semibold cursor-pointer hover:bg-cyan-600 duration-500";
+  "tracking-wider py-3 px-2 bg-violet-800 rounded-md text-md text-slate-200 font-semibold cursor-pointer hover:bg-violet-700 duration-500";
 </script>
 
 <template>
