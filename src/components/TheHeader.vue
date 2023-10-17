@@ -23,8 +23,11 @@ let inputError = ref(false);
 
 function addUser() {
   let user = username.value;
-
   let coincidence = false;
+
+  user.split('').forEach(el => {
+	if(!/^[A-Za-z\s]+$/.test(el)) coincidence = true
+  })
 
   props.users.forEach((el) => {
     if (el == user) {
