@@ -39,7 +39,7 @@ function selectUser(user) {
 }
 
 const userClasses =
-  "tracking-wider py-3 px-2 bg-blue-600 rounded-md text-md text-white font-semibold cursor-pointer hover:bg-yellow-500 duration-500";
+  "tracking-wider py-3 px-2 bg-cyan-800 rounded-md text-md text-slate-200 font-semibold cursor-pointer hover:bg-cyan-600 duration-500";
 </script>
 
 <template>
@@ -47,7 +47,7 @@ const userClasses =
     <div
       class="spilne-container"
       :class="{
-        'border-b-2 pb-4 border-slate-300': props.users.length,
+        'border-b-2 border-stone-500 pb-4': props.users.length,
       }"
     >
       <div class="flex gap-2 flex-wrap">

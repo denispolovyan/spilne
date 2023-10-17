@@ -46,25 +46,25 @@ onMounted(() => {
 
 <template>
   <div>
-    <div class="spilne-container py-4 border-b-2 border-slate-300" v-if="isNotNull">
+    <div class="spilne-container py-4 border-b-2 border-stone-500" v-if="isNotNull">
       <div>
-        <v-table>
+        <v-table theme="dark">
           <thead>
             <tr>
-              <th class="text-left">Name</th>
-              <th class="text-left">Sum</th>
+              <th class="text-left pl-10" >Name</th>
+              <th class="text-center">Sum</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="item in props.usersAndSum" :key="item.name">
-              <td v-if="item.sum">{{ item.name }}</td>
-              <td v-if="item.sum">{{ item.sum }}</td>
+              <td v-if="item.sum" class="pl-10">{{ item.name }}</td>
+              <td v-if="item.sum" class="text-center">{{ item.sum }}</td>
             </tr>
           </tbody>
-          <tbody>
+          <tbody class="border-t">
             <tr>
-              <td class="font-semibold">Total</td>
-              <td>{{ totalSum }}</td>
+              <td class="font-semibold pl-10">Total</td>
+              <td class="text-center">{{ totalSum }}</td>
             </tr>
           </tbody>
         </v-table>

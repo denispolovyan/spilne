@@ -20,8 +20,13 @@ let inputs = ref([]);
 
 let isDebts = ref(false);
 
+// refs
+
+const header = ref(null);
+
 function createUser(user) {
   users.value.push(user);
+
   localStorage.setItem("users", JSON.stringify(users.value));
 }
 
@@ -31,7 +36,11 @@ function deleteUsers() {
   });
   selectedUsers.value = [];
 
+  if (!users.value.length) inputs.value = [];
+
   localStorage.setItem("users", JSON.stringify(users.value));
+  localStorage.setItem("inputs", JSON.stringify(inputs.value));
+
 }
 
 function createInput(users) {
@@ -98,12 +107,14 @@ function createInput(users) {
   }
 
   deleteSelectedUsers();
+
   localStorage.setItem("inputs", JSON.stringify(inputs.value));
 }
 
 function deleteInput(id) {
   inputs.value = inputs.value.filter((el) => el.id != id);
   calculateUsersSum();
+
   localStorage.setItem("inputs", JSON.stringify(inputs.value));
 }
 
@@ -189,8 +200,6 @@ function watchDebtState() {
   });
 }
 
-// watch ====>
-
 watch(
   () => usersAndSum.value,
   () => {
@@ -210,6 +219,7 @@ watch(
 // onMounted ====>
 
 onMounted(() => {
+  setTimeout(() => {}, 200);
   createUsersSum();
 
   let getUsers = localStorage.getItem("users");
@@ -239,7 +249,7 @@ onMounted(() => {
 
 <template>
   <div class="flex flex-col h-screen">
-    <the-header :users="users" @createUser="createUser($event)" />
+    <the-header :users="users" @createUser="createUser($event)" ref="header" />
     <div class="grow">
       <the-users
         :users="users"
@@ -252,7 +262,7 @@ onMounted(() => {
         @deleteUsers="deleteUsers()"
         @createInput="createInput($event)"
       />
-      <div v-if="inputs.length">
+      <div v-if="inputs.length" id="inputs">
         <div v-for="input in inputs" :key="input.id">
           <base-input
             :sum="input.sum"
@@ -280,7 +290,8 @@ onMounted(() => {
 <style>
 html {
   height: 100vh;
-  margin-bottom: 20px;
+  padding-bottom: 20px;
+  background-color: rgb(82 82 82);
 }
 body {
   height: 100vh;
