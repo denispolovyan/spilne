@@ -13,6 +13,7 @@
     "@heroicons/vue": "^2.0.18",
     "vue": "^3.3.4",
     "vue-scrollto": "^2.20.0",
+    "vue3-datepicker": "^0.4.0",
     "vuetify": "^3.3.21"
   },
   "devDependencies": {
