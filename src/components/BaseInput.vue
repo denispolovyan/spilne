@@ -49,7 +49,7 @@ function calculateSum() {
 
   if (sumArray.length) {
     sumArray.forEach((el) => {
-      if (isNaN(el) == true && el != " ") {
+      if ((isNaN(el) == true && el != " ") || el < 0) {
         sumArray = sumArray.filter((t) => t != el);
       }
     });
