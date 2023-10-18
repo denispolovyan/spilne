@@ -1,6 +1,6 @@
 <script setup>
 const MAX_NAME_LENGTH = 20;
-const MAX_NOTES_LENGTH = 30;
+const MAX_NOTES_LENGTH = 20;
 
 import { ref, watch, onMounted } from "vue";
 

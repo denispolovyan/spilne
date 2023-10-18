@@ -123,12 +123,15 @@ function deleteInput(id) {
 }
 
 function changeSum(data) {
+  console.log(1);
   const id = data[0];
 
   inputs.value.find((t) => t.id == id).sum = data[1];
 
   calculateUsersSum();
-//   createUsersSum();
+  if (!usersAndSum.value.length) {
+    createUsersSum();
+  }
   localStorage.setItem("inputs", JSON.stringify(inputs.value));
 }
 
@@ -206,8 +209,8 @@ function watchDebtState() {
 }
 
 function saveCalculation(data) {
-	let calculationToSave = usersAndSum.value
-	calculationToSave.unshift(data)
+  let calculationToSave = usersAndSum.value;
+  calculationToSave.unshift(data);
 
   calculationHistory.value.push(calculationToSave);
   usersAndSum.value = [];
