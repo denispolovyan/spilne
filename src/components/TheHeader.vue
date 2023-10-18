@@ -86,7 +86,7 @@ const buttonClasses =
             @click="inputError = false"
             v-model="username"
             label="Name"
-            maxlength="MAX_LENGTH"
+            :maxlength="MAX_LENGTH"
             hide-details="auto"
           />
         </div>
