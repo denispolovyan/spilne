@@ -1,4 +1,6 @@
 <script setup>
+import SaveCalculation from "./SaveCalculation.vue";
+
 import { watch, ref, onMounted } from "vue";
 
 const props = defineProps({
@@ -6,6 +8,20 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  type: {
+    type: String,
+    required: false,
+  },
+});
+
+const emits = defineEmits({
+  saveCalculation: {
+	required: false
+  },
+  deleteCalculation: {
+	type: Array,
+	required: false
+  }
 });
 
 const isNotNull = ref(false);
@@ -39,19 +55,22 @@ watch(
 );
 
 onMounted(() => {
-	calculateTotalSum();
+  calculateTotalSum();
   watchDebtState();
 });
 </script>
 
 <template>
   <div>
-    <div class="spilne-container py-4 border-b-2 border-stone-500" v-if="isNotNull">
+    <div
+      class="spilne-container py-4 border-b-2 border-stone-500"
+      v-if="isNotNull"
+    >
       <div>
-        <v-table theme="dark">
+        <v-table theme="dark ">
           <thead>
             <tr>
-              <th class="text-left pl-12" >Name</th>
+              <th class="text-left pl-12">Name</th>
               <th class="text-center">Sum</th>
             </tr>
           </thead>
@@ -68,6 +87,11 @@ onMounted(() => {
             </tr>
           </tbody>
         </v-table>
+        <save-calculation
+          :type="props.type"
+          @saveCalculation="emits('saveCalculation')"
+          @deleteCalculation="emits('deleteCalculation', props.usersAndSum)"
+        />
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <script setup>
 const MAX_LENGTH = 12;
 
-import { UserPlusIcon, InformationCircleIcon } from "@heroicons/vue/24/outline";
+import { UserPlusIcon, Bars3Icon } from "@heroicons/vue/24/outline";
 
 import { ref, onMounted, onBeforeUnmount } from "vue";
 
@@ -10,6 +10,9 @@ const emits = defineEmits({
     type: String,
     required: true,
   },
+  showMenu: {
+	required: false
+  }
 });
 
 const props = defineProps({
@@ -93,10 +96,11 @@ const buttonClasses =
             class="h-12 text-slate-200 p-1 bg-pink-500 hover:bg-pink-800"
             @click="addUser()"
           />
-          <InformationCircleIcon
-            :class="buttonClasses"
-            class="h-12 text-slate-200 p-1 bg-purple-600 hover:bg-purple-800"
-          />
+            <Bars3Icon
+              :class="buttonClasses"
+              class="h-12 text-slate-200 p-1 bg-purple-600 hover:bg-purple-800"
+				  @click="emits('showMenu')"
+            />
         </div>
       </div>
     </div>

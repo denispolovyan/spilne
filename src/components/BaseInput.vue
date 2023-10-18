@@ -102,7 +102,6 @@ onMounted(() => {
           </div>
           <div class="flex gap-4 text-slate-200">
             <v-text-field
-              inputmode="tel"
               v-model="sum"
               label="Sum"
               :maxlength="MAX_LENGTH"
@@ -111,7 +110,7 @@ onMounted(() => {
             />
             <div class="flex gap-2">
               <div
-                class="w-14 bg-amber-500 duration-1000 cursor-pointer hover:bg-amber-700 text-slate-100 hover:text-slate-300 rounded-md flex items-center justify-center tracking-wider font-semibold"
+                class="w-14 bg-amber-500 duration-1000 cursor-pointer hover:bg-amber-600 text-slate-100 hover:text-slate-200 rounded-md flex items-center justify-center tracking-wider font-semibold"
               >
                 {{ calculatedSum }}
               </div>

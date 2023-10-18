@@ -7,6 +7,7 @@ import BaseTable from "./components/BaseTable.vue";
 import NoInputs from "./components/NoInputs.vue";
 import NoDebts from "./components/NoDebts.vue";
 import TheFooter from "./components/TheFooter.vue";
+import TheMenu from "./components/TheMenu.vue";
 
 import { ref, watch, onMounted } from "vue";
 
@@ -16,9 +17,13 @@ let usersAndSum = ref([]);
 
 let selectedUsers = ref([]);
 
+let calculationHistory = ref([]);
+
 let inputs = ref([]);
 
 let isDebts = ref(false);
+
+let showMenu = ref(false);
 
 // refs
 
@@ -40,7 +45,6 @@ function deleteUsers() {
 
   localStorage.setItem("users", JSON.stringify(users.value));
   localStorage.setItem("inputs", JSON.stringify(inputs.value));
-
 }
 
 function createInput(users) {
@@ -200,6 +204,29 @@ function watchDebtState() {
   });
 }
 
+function saveCalculation() {
+  calculationHistory.value.push(usersAndSum.value);
+  usersAndSum.value = [];
+  inputs.value = [];
+
+  localStorage.setItem("inputs", JSON.stringify(inputs.value));
+  localStorage.setItem("users-sums", JSON.stringify(usersAndSum.value));
+  localStorage.setItem(
+    "calculation-history",
+    JSON.stringify(calculationHistory.value)
+  );
+}
+
+function deleteCalculation(calculation) {
+  calculationHistory.value = calculationHistory.value.filter(
+    (t) => t != calculation
+  );
+  localStorage.setItem(
+    "calculation-history",
+    JSON.stringify(calculationHistory.value)
+  );
+}
+
 watch(
   () => usersAndSum.value,
   () => {
@@ -232,6 +259,11 @@ onMounted(() => {
     inputs.value = JSON.parse(getInputs);
   }
 
+  let getCalculationHistory = localStorage.getItem("calculation-history");
+  if (JSON.parse(getCalculationHistory)) {
+    calculationHistory.value = JSON.parse(getCalculationHistory);
+  }
+
   let getUsersAndSums = localStorage.getItem("users-sums");
   if (JSON.parse(getUsersAndSums)) {
     JSON.parse(getUsersAndSums).forEach((newUser) => {
@@ -248,8 +280,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col h-screen">
-    <the-header :users="users" @createUser="createUser($event)" ref="header" />
+  <div class="flex flex-col h-screen" v-if="!showMenu">
+    <the-header
+      :users="users"
+      @showMenu="showMenu = true"
+      @createUser="createUser($event)"
+      ref="header"
+    />
     <div class="grow">
       <the-users
         :users="users"
@@ -279,11 +316,20 @@ onMounted(() => {
         class="pb-8"
         v-if="inputs.length"
         :usersAndSum="usersAndSum"
+        :type="'create'"
+        @saveCalculation="saveCalculation()"
       />
       <no-debts class="pb-8" v-if="!isDebts && inputs.length" />
     </div>
 
     <the-footer clas="w-screen" />
+  </div>
+  <div v-else>
+    <the-menu
+      @hideMenu="showMenu = false"
+      @deleteCalculation="deleteCalculation($event)"
+      :calculationHistory="calculationHistory"
+    />
   </div>
 </template>
 
