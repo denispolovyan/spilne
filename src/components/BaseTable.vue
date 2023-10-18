@@ -15,17 +15,20 @@ const props = defineProps({
 });
 
 const emits = defineEmits({
-  saveCalculation: {
-	required: false
+  addCalcInfo: {
+    type: Object,
+    required: false,
   },
   deleteCalculation: {
-	type: Array,
-	required: false
-  }
+    type: Array,
+    required: false,
+  },
 });
 
 const isNotNull = ref(false);
 const totalSum = ref(0);
+const tableInfoClasses =
+  "mt-2 border-2 rounded-md  p-4 text-slate-200 hover:text-neutral-600 cursor-pointer duration-1000 hover:bg-slate-300 bg-neutral-500 mb-2 text-xl";
 
 function watchDebtState() {
   isNotNull.value = false;
@@ -39,7 +42,7 @@ function watchDebtState() {
 function calculateTotalSum() {
   let newTotalSum = 0;
   props.usersAndSum.forEach((el) => {
-    newTotalSum += el.sum;
+    if (el.sum) newTotalSum += el.sum;
   });
 
   totalSum.value = newTotalSum;
@@ -63,10 +66,19 @@ onMounted(() => {
 <template>
   <div>
     <div
-      class="spilne-container py-4 border-b-2 border-stone-500"
+      class=" py-4 border-b-2 border-stone-500"
       v-if="isNotNull"
     >
       <div>
+        <div v-if="props.type == 'reset'" :class="tableInfoClasses">
+          <div class="flex flex-col gap-2">
+            <div class="flex justify-between">
+              <div>{{ props.usersAndSum[0].paid }}</div>
+              <div>{{ props.usersAndSum[0].date }}</div>
+            </div>
+            <div class="">{{ props.usersAndSum[0].notes }}</div>
+          </div>
+        </div>
         <v-table theme="dark ">
           <thead>
             <tr>
@@ -89,7 +101,7 @@ onMounted(() => {
         </v-table>
         <save-calculation
           :type="props.type"
-          @saveCalculation="emits('saveCalculation')"
+          @addCalcInfo="emits('addCalcInfo', $event)"
           @deleteCalculation="emits('deleteCalculation', props.usersAndSum)"
         />
       </div>

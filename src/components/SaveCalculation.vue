@@ -13,7 +13,8 @@ const props = defineProps({
 });
 
 const emits = defineEmits({
-  saveCalculation: {
+  addCalcInfo: {
+    type: Object,
     required: false,
   },
   deleteCalculation: {
@@ -39,6 +40,11 @@ const buttonClasses =
     <div v-else :class="buttonClasses" @click="emits('deleteCalculation')">
       <FolderMinusIcon class="h-12" />
     </div>
-    <div v-if="showCalcInfo"><calculation-info @hideCalcInfo="showCalcInfo = false"/></div>
+    <div v-if="showCalcInfo">
+      <calculation-info
+        @hideCalcInfo="showCalcInfo = false"
+        @addUserInfo="emits('addCalcInfo', $event)"
+      />
+    </div>
   </div>
 </template>

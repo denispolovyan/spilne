@@ -128,6 +128,7 @@ function changeSum(data) {
   inputs.value.find((t) => t.id == id).sum = data[1];
 
   calculateUsersSum();
+//   createUsersSum();
   localStorage.setItem("inputs", JSON.stringify(inputs.value));
 }
 
@@ -204,8 +205,11 @@ function watchDebtState() {
   });
 }
 
-function saveCalculation() {
-  calculationHistory.value.push(usersAndSum.value);
+function saveCalculation(data) {
+	let calculationToSave = usersAndSum.value
+	calculationToSave.unshift(data)
+
+  calculationHistory.value.push(calculationToSave);
   usersAndSum.value = [];
   inputs.value = [];
 
@@ -313,11 +317,11 @@ onMounted(() => {
       <no-inputs class="pb-8" v-else />
 
       <base-table
-        class="pb-8"
+        class="pb-8 spilne-container"
         v-if="inputs.length"
         :usersAndSum="usersAndSum"
         :type="'create'"
-        @saveCalculation="saveCalculation()"
+        @addCalcInfo="saveCalculation($event)"
       />
       <no-debts class="pb-8" v-if="!isDebts && inputs.length" />
     </div>
