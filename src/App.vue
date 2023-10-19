@@ -123,7 +123,6 @@ function deleteInput(id) {
 }
 
 function changeSum(data) {
-  console.log(1);
   const id = data[0];
 
   inputs.value.find((t) => t.id == id).sum = data[1];

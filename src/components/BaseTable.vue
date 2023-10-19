@@ -76,7 +76,7 @@ onMounted(() => {
               <div>{{ props.usersAndSum[0].paid }}</div>
               <div>{{ props.usersAndSum[0].date }}</div>
             </div>
-            <div class="">{{ props.usersAndSum[0].notes }}</div>
+            <div class="break-words">{{ props.usersAndSum[0].notes }}</div>
           </div>
         </div>
         <v-table theme="dark ">

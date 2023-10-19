@@ -1,6 +1,6 @@
 <script setup>
 const MAX_NAME_LENGTH = 20;
-const MAX_NOTES_LENGTH = 20;
+const MAX_NOTES_LENGTH = 50;
 
 import { ref, watch, onMounted } from "vue";
 
@@ -79,60 +79,60 @@ onMounted(() => {
 const inputClasses =
   "bg-slate-100 h-14 rounded-md pl-2 text-xl hover:bg-slate-300 duration-500";
 const datepickerClasses =
-  "pl-3 text-xl bg-slate-100 h-14 py-4 w-48 rounded-md cursor-pointer hover:bg-slate-300 duration-500 sssm:w-36";
+  "pl-3 text-xl bg-slate-100 h-14 py-4 rounded-md cursor-pointer hover:bg-slate-300 duration-500 ";
 const buttonClasses =
-  "bg-slate-100 h-14 rounded-md text-xl hover:bg-slate-300 duration-500";
+  "bg-slate-100 h-14 rounded-md text-xl hover:bg-slate-300 duration-500 px-1";
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 font-semibold">
-    <div class="flex justify-between mt-3">
-      <Datepicker v-model="date" :class="datepickerClasses"></Datepicker>
-      <div class="text-right">
-        <input
-          :maxlength="MAX_NAME_LENGTH"
-          placeholder="Who paid"
-          type="text"
-          :class="inputClasses"
-          v-model="name"
-          class="w-full ssm:w-56 sssm:w-52 ssssm:w-44"
-        />
-      </div>
+  <div class="flex flex-col gap-4 font-semibold mt-3">
+    <div class="flex flex-row gap-4">
+      <Datepicker
+        v-model="date"
+        :class="datepickerClasses"
+        class="basis-1/2 w-full"
+      />
+      <input
+        :maxlength="MAX_NAME_LENGTH"
+        placeholder="Who paid"
+        type="text"
+        :class="inputClasses"
+        v-model="name"
+        class="basis-1/2 w-full"
+      />
     </div>
-    <div class="flex justify-between gap-4">
-      <div>
-        <input
-          :maxlength="MAX_NOTES_LENGTH"
-          placeholder="Notes"
-          type="text"
-          :class="inputClasses"
-          class="w-11/12 ssm:w-48 sssm:w-36"
-          v-model="notes"
-        />
-      </div>
-      <div class="flex gap-8 sssm:gap-4 ssssm:gap-3">
-        <button
-          class="w-24 ssssm:w-full ssssm:p-2"
-          :class="buttonClasses"
-          @click="addCalcInfo()"
-          :disabled="disabled"
+    <div class="flex  gap-4">
+      <input
+        :maxlength="MAX_NOTES_LENGTH"
+        placeholder="Notes"
+        type="text"
+        :class="inputClasses"
+        class="basis-full w-full"
+        v-model="notes"
+      />
+    </div>
+    <div class="flex flex-row gap-4 w-full">
+      <button
+        :class="buttonClasses"
+        @click="addCalcInfo()"
+        :disabled="disabled"
+        class="basis-1/2 w-full"
+      >
+        <span
+          class="duration-1000"
+          :class="{
+            'text-red-500': disabled,
+          }"
+          >Confirm</span
         >
-          <span
-            class="duration-1000"
-            :class="{
-              'text-red-500': disabled,
-            }"
-            >Confirm</span
-          >
-        </button>
-        <button
-          class="w-24 ssssm:w-full ssssm:p-2"
-          :class="buttonClasses"
-          @click="emits('hideCalcInfo')"
-        >
-          Close
-        </button>
-      </div>
+      </button>
+      <button
+        :class="buttonClasses"
+        @click="emits('hideCalcInfo')"
+        class="basis-1/2 w-full"
+      >
+        Close
+      </button>
     </div>
   </div>
 </template>
