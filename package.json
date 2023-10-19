@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@heroicons/vue": "^2.0.18",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.7.0",
     "vue": "^3.3.4",
     "vue-scrollto": "^2.20.0",
     "vue3-datepicker": "^0.4.0",

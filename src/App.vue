@@ -211,7 +211,7 @@ function saveCalculation(data) {
   let calculationToSave = usersAndSum.value;
   calculationToSave.unshift(data);
 
-  calculationHistory.value.push(calculationToSave);
+  calculationHistory.value.unshift(calculationToSave);
   usersAndSum.value = [];
   inputs.value = [];
 
@@ -295,6 +295,7 @@ onMounted(() => {
     />
     <div class="grow">
       <the-users
+        id="users"
         :users="users"
         :selectedUsers="selectedUsers"
         @selectUser="setSelectedUsers($event)"
