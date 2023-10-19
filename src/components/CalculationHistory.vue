@@ -22,7 +22,6 @@ const emits = defineEmits({
     <div v-if="props.calculationHistory.length">
       <div v-for="calculation in props.calculationHistory" :key="calculation">
         <base-table
-          class="pb-8"
           :usersAndSum="calculation"
           :type="'reset'"
           @deleteCalculation="emits('deleteCalculation', $event)"

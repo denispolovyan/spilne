@@ -1,6 +1,8 @@
 <script setup>
 import SaveCalculation from "./SaveCalculation.vue";
 
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/vue/24/outline";
+
 import { watch, ref, onMounted } from "vue";
 
 const props = defineProps({
@@ -25,11 +27,12 @@ const emits = defineEmits({
   },
 });
 
+const showTable = ref(false);
 const isNotNull = ref(false);
 const totalSum = ref(0);
 const tableInfoClasses =
   "mt-2 border-2 rounded-md  p-4 text-slate-200 hover:text-neutral-600 cursor-pointer duration-1000 hover:bg-slate-300 bg-neutral-500 mb-2 text-xl";
-
+const iconClasses = "h-12 cursor-pointer";
 function watchDebtState() {
   isNotNull.value = false;
   props.usersAndSum.forEach((el) => {
@@ -65,21 +68,33 @@ onMounted(() => {
 
 <template>
   <div>
-    <div
-      class=" py-4 border-b-2 border-stone-500"
-      v-if="isNotNull"
-    >
+    <div class="pb-4 border-b-2 border-stone-500" v-if="isNotNull">
       <div>
         <div v-if="props.type == 'reset'" :class="tableInfoClasses">
-          <div class="flex flex-col gap-2">
+          <div
+            class="flex flex-col gap-2"
+            @click="showTable ? (showTable = false) : (showTable = true)"
+          >
             <div class="flex justify-between">
               <div>{{ props.usersAndSum[0].paid }}</div>
               <div>{{ props.usersAndSum[0].date }}</div>
             </div>
-            <div class="break-words">{{ props.usersAndSum[0].notes }}</div>
+            <div class="flex justify-between items-center gap-2">
+              <div class="break-words w-2/3">
+                {{ props.usersAndSum[0].notes }}
+              </div>
+              <div>
+                <div class="basis-1/2 w-full">
+                  <ChevronDownIcon
+                    v-if="!showTable"
+                    :class="iconClasses"
+                  /><ChevronUpIcon :class="iconClasses" v-else />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <v-table theme="dark ">
+        <v-table theme="dark" v-if="props.type == 'create' || showTable">
           <thead>
             <tr>
               <th class="text-left pl-12">Name</th>
@@ -100,6 +115,7 @@ onMounted(() => {
           </tbody>
         </v-table>
         <save-calculation
+          v-if="props.type == 'create' || showTable"
           :type="props.type"
           @addCalcInfo="emits('addCalcInfo', $event)"
           @deleteCalculation="emits('deleteCalculation', props.usersAndSum)"
