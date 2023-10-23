@@ -78,7 +78,10 @@ function calculateSum() {
 }
 
 const buttonClasses =
-  "bg-red-600 h-14 w-14 rounded-md flex items-center justify-center hover:bg-red-700 duration-1000 cursor-pointer basis-14";
+  "border-2 border-red-600 h-14 w-14 rounded-md flex items-center justify-center hover:bg-red-700 duration-1000 cursor-pointer basis-14 neon-red text-red-200 hover:text-white";
+
+const calculatedSumClasses =
+  "w-14 border-2 border-amber-500 text-amber-200 duration-1000 cursor-pointer hover:bg-amber-600 hover:text-white rounded-md flex items-center justify-center tracking-wider font-semibold neon-orange";
 
 onMounted(() => {
   sum.value = props.sum || "";
@@ -94,7 +97,7 @@ onMounted(() => {
           <div class="flex gap-4 flex-wrap gap-x-2 gap-y-1">
             <div v-for="user in props.users" :key="user">
               <div
-                class="tracking-wider font-semibold bg-violet-800 p-1 rounded-md text-slate-200"
+                class="tracking-wider font-semibold bg-violet-800 p-1 rounded-md text-slate-200 neon-blue"
               >
                 <p>{{ user }}</p>
               </div>
@@ -102,6 +105,7 @@ onMounted(() => {
           </div>
           <div class="flex gap-4 text-slate-200">
             <v-text-field
+				class="neon-input"
               v-model="sum"
               label="Sum"
               :maxlength="MAX_LENGTH"
@@ -109,16 +113,14 @@ onMounted(() => {
               @input="calculateSum()"
             />
             <div class="flex gap-2">
-              <div
-                class="w-14 bg-amber-500 duration-1000 cursor-pointer hover:bg-amber-600 text-slate-100 hover:text-slate-200 rounded-md flex items-center justify-center tracking-wider font-semibold"
-              >
+              <div :class="calculatedSumClasses">
                 {{ calculatedSum }}
               </div>
               <div
                 :class="buttonClasses"
                 @click="emits('deleteInput', props.id)"
               >
-                <TrashIcon class="h-12 p-1 text-slate-200" />
+                <TrashIcon class="h-12 p-1" />
               </div>
             </div>
           </div>
@@ -127,3 +129,28 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.neon-red {
+  -moz-box-shadow: 0px 0px 14px #c41212;
+  -webkit-box-shadow: 0px 0px 14px #c41212;
+  box-shadow: 0px 0px 14px #c41212;
+}
+.neon-orange {
+  -moz-box-shadow: 0px 0px 14px #8f7c0f;
+  -webkit-box-shadow: 0px 0px 14px #786d0e;
+  box-shadow: 0px 0px 14px #898f0e;
+}
+
+.neon-blue {
+  -moz-box-shadow: 0px 0px 7px #1c8ad9;
+  -webkit-box-shadow: 0px 0px 7px #1c95d6;
+  box-shadow: 0px 0px 7px #1590dd;
+}
+
+.neon-input {
+  -moz-box-shadow: 0px 0px 7px #8f8d0f;
+  -webkit-box-shadow: 0px 0px 7px #75780e;
+  box-shadow: 0px 0px 7px #868f0e;
+}
+</style>

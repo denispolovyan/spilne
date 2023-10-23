@@ -11,8 +11,8 @@ const emits = defineEmits({
     required: true,
   },
   showMenu: {
-	required: false
-  }
+    required: false,
+  },
 });
 
 const props = defineProps({
@@ -70,7 +70,7 @@ onBeforeUnmount(() => {
 });
 
 const buttonClasses =
-  "h-14 w-14 rounded-md flex items-center justify-center duration-1000 cursor-pointer basis-14";
+  "h-14 w-14 rounded-md flex items-center justify-center duration-700 cursor-pointer basis-14";
 </script>
 
 <template>
@@ -88,21 +88,40 @@ const buttonClasses =
             label="Name"
             :maxlength="MAX_LENGTH"
             hide-details="auto"
+				class="neon-input"
           />
         </div>
         <div class="flex gap-2">
           <UserPlusIcon
             :class="buttonClasses"
-            class="h-12 text-slate-200 p-1 bg-pink-500 hover:bg-pink-800"
+            class="border-2 h-12 text-pink-200 p-1 border-pink-500 hover:bg-pink-800 hover:text-white neon-pink"
             @click="addUser()"
           />
-            <Bars3Icon
-              :class="buttonClasses"
-              class="h-12 text-slate-200 p-1 bg-purple-600 hover:bg-purple-800"
-				  @click="emits('showMenu')"
-            />
+          <Bars3Icon
+            :class="buttonClasses"
+            class="border-2 h-12 text-purple-200 p-1 border-purple-600 hover:bg-purple-800 hover:text-white neon-violet"
+            @click="emits('showMenu')"
+          />
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.neon-pink {
+  -moz-box-shadow: 0px 0px 14px #c412b2;
+  -webkit-box-shadow: 0px 0px 14px #c412b8;
+  box-shadow: 0px 0px 14px #c41289;
+}
+.neon-violet {
+  -moz-box-shadow: 0px 0px 14px #8f0f82;
+  -webkit-box-shadow: 0px 0px 14px #780e71;
+  box-shadow: 0px 0px 14px #8f0e64;
+}
+.neon-input {
+  -moz-box-shadow: 0px 0px 7px #0f8f89;
+  -webkit-box-shadow: 0px 0px 7px #0e7873;
+  box-shadow: 0px 0px 7px #0e8f8d;
+}
+</style>
