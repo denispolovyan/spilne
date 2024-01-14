@@ -52,6 +52,8 @@ function createInput(users) {
   let usersArray = [];
   let coincidence = [];
   let exactCoincidence = false;
+  let id = 1;
+  let inputsId = [];
 
   users.forEach((el) => {
     usersArray.push(el);
@@ -100,13 +102,9 @@ function createInput(users) {
     });
   });
 
-  let inputsId = [];
-
   inputs.value.forEach(el => (
     inputsId.push(el.id)
   ))
-
-  let id = 1;
 
   while(inputsId.includes(id)) {
     id++;
@@ -376,5 +374,4 @@ body {
     margin: 0px auto;
   }
 }
-
 </style>
