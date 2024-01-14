@@ -43,8 +43,8 @@ function deleteUsers() {
 
   if (!users.value.length) inputs.value = [];
 
-  localStorage.setItem("users", JSON.stringify(users.value));
   localStorage.setItem("inputs", JSON.stringify(inputs.value));
+  localStorage.setItem("users", JSON.stringify(users.value));
 }
 
 function createInput(users) {
