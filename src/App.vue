@@ -100,10 +100,22 @@ function createInput(users) {
     });
   });
 
+  let inputsId = [];
+
+  inputs.value.forEach(el => (
+    inputsId.push(el.id)
+  ))
+
+  let id = 1;
+
+  while(inputsId.includes(id)) {
+    id++;
+  }
+
   if (!exactCoincidence) {
     const input = {
       users: usersArray,
-      id: inputs.value.length + 1,
+      id: id,
       sum: 0,
     };
 
